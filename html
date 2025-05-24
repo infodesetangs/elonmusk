@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dépense la fortune d'Elon Musk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto:wght@300;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-bg: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      --card-bg: #1c1c1e;
+      --text-color: #fff;
+      --accent: #00ffcc;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--main-bg);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+    }
+
+    .money-left {
+      font-size: 2rem;
+      margin-top: 1rem;
+      color: var(--accent);
+    }
+
+    .language-switcher {
+      margin-top: 1rem;
+    }
+
+    .language-switcher select {
+      padding: 0.4rem;
+      font-size: 1rem;
+    }
+
+    .items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .item {
+      background: var(--card-bg);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .item:hover {
+      transform: scale(1.05);
+    }
+
+    .item-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .item h3 {
+      margin: 0.5rem 0;
+    }
+
+    .item button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="title">Dépense la fortune d'Elon Musk</h1>
+    <div class="money-left" id="moneyLeft">$354,000,000,000</div>
+    <div class="language-switcher">
+      <select id="langSelect">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="items" id="itemsContainer"></main>
+
+  <script>
+    const LANGS = {
+      fr: { title: "Dépense la fortune d'Elon Musk", buy: "Acheter" },
+      en: { title: "Spend Elon Musk's Fortune", buy: "Buy" },
+    };
+
+    let fortune = 354_000_000_000;
+    const moneyLeftEl = document.getElementById('moneyLeft');
+    const titleEl = document.getElementById('title');
+    const langSelect = document.getElementById('langSelect');
+    const itemsContainer = document.getElementById('itemsContainer');
+
+    const items = [
+      { name: "Équipe de F1", price: 700000000, image: "https://cdn-8.motorsport.com/images/amp/68ey3q40/s1000/f1-abu-dhabi-gp-2017-f1-logo-6614911.jpg" },
+      { name: "Île privée", price: 150000000, image: "https://www.luxe-infinity.com/wp-content/uploads/2018/09/little-pipe-cay-house-ISLESALE0618.jpg" },
+      { name: "Boeing 747 personnalisé", price: 400000000, image: "https://tse3.mm.bing.net/th?id=OIP.q9pUC_lBUGYKJNmjDpolwAHaEK&pid=Api&P=0&h=220" },
+      { name: "Tour à Dubaï", price: 1100000000, image: "https://www.okvoyage.com/wp-content/uploads/2021/02/vue-aerienne-de-dubai-1536x1024.jpg" },
+      { name: "Villa à Beverly Hills", price: 50000000, image: "https://via.placeholder.com/250?text=Villa" },
+      { name: "Château en France", price: 20000000, image: "https://via.placeholder.com/250?text=Chateau" },
+      { name: "Réseau internet mondial", price: 15000000000, image: "https://via.placeholder.com/250?text=Internet" },
+      { name: "Station spatiale privée", price: 100000000000, image: "https://via.placeholder.com/250?text=Station+spatiale" },
+      { name: "Tesla Model S", price: 90000, image: "https://via.placeholder.com/250?text=Tesla" },
+      { name: "Fusée Falcon 9", price: 62000000, image: "https://via.placeholder.com/250?text=Falcon+9" },
+      { name: "Robot domestique", price: 15000, image: "https://via.placeholder.com/250?text=Robot" },
+      { name: "Yacht de luxe", price: 300000000, image: "https://via.placeholder.com/250?text=Yacht" },
+      { name: "Montre Rolex", price: 12000, image: "https://via.placeholder.com/250?text=Rolex" },
+      { name: "Tableau de Picasso", price: 100000000, image: "https://via.placeholder.com/250?text=Picasso" },
+      { name: "Supermarché entier", price: 40000000, image: "https://via.placeholder.com/250?text=Supermarché" },
+      { name: "Gratte-ciel à New York", price: 2000000000, image: "https://via.placeholder.com/250?text=Gratte-ciel" },
+      { name: "Jet privé", price: 65000000, image: "https://via.placeholder.com/250?text=Jet" },
+      { name: "Google Pixel 8", price: 899, image: "https://via.placeholder.com/250?text=Pixel+8" },
+      { name: "TGV complet", price: 300000000, image: "https://via.placeholder.com/250?text=TGV" },
+      { name: "Réseau ferroviaire pays", price: 50000000000, image: "https://via.placeholder.com/250?text=Réseau" },
+      { name: "NFT de singe", price: 120000, image: "https://via.placeholder.com/250?text=NFT" },
+      { name: "Casque VR haut de gamme", price: 3500, image: "https://via.placeholder.com/250?text=VR" },
+      { name: "Usine de batteries", price: 2000000000, image: "https://via.placeholder.com/250?text=Batteries" },
+      { name: "Port spatial", price: 10000000000, image: "https://via.placeholder.com/250?text=Port+spatial" },
+      { name: "Bunker de luxe", price: 2500000, image: "https://via.placeholder.com/250?text=Bunker" },
+      { name: "Chaîne de télé privée", price: 70000000, image: "https://via.placeholder.com/250?text=TV" },
+      { name: "Tour de contrôle aéroport", price: 150000000, image: "https://via.placeholder.com/250?text=Tour+contrôle" },
+      { name: "Musée privé", price: 30000000, image: "https://via.placeholder.com/250?text=Musée" },
+      { name: "Zoo complet", price: 80000000, image: "https://via.placeholder.com/250?text=Zoo" },
+      { name: "Compagnie aérienne", price: 6000000000, image: "https://via.placeholder.com/250?text=Airline" },
+      { name: "Or pur 1 tonne", price: 65000000, image: "https://via.placeholder.com/250?text=Or" },
+      { name: "Appartement Manhattan", price: 20000000, image: "https://via.placeholder.com/250?text=Appartement" },
+      { name: "Île grecque", price: 45000000, image: "https://via.placeholder.com/250?text=Île+grecque" },
+      { name: "Stade de foot", price: 900000000, image: "https://via.placeholder.com/250?text=Stade" },
+      { name: "Entreprise tech startup", price: 25000000, image: "https://via.placeholder.com/250?text=Startup" },
+      { name: "Caméra de cinéma RED", price: 50000, image: "https://via.placeholder.com/250?text=Caméra" },
+      { name: "Lance-flammes (Boring Co)", price: 600, image: "https://via.placeholder.com/250?text=Lance-flammes" },
+      { name: "Machine IA complète", price: 1800000, image: "https://via.placeholder.com/250?text=IA" },
+      { name: "Immeuble Tokyo", price: 350000000, image: "https://via.placeholder.com/250?text=Tokyo" },
+      { name: "Sous-marin privé", price: 3500000, image: "https://via.placeholder.com/250?text=Sous-marin" },
+    ];
+
+    let currentLang = 'fr';
+
+    function updateLang() {
+      const lang = LANGS[currentLang];
+      titleEl.textContent = lang.title;
+      renderItems();
+    }
+
+    function formatMoney(n) {
+      return '$' + n.toLocaleString();
+    }
+
+    function renderItems() {
+      itemsContainer.innerHTML = '';
+      items.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" class="item-img" />
+          <h3>${item.name}</h3>
+          <p>${formatMoney(item.price)}</p>
+          <button onclick="buyItem(${index})">${LANGS[currentLang].buy}</button>
+        `;
+        itemsContainer.appendChild(div);
+      });
+    }
+
+    function buyItem(index) {
+      const price = items[index].price;
+      if (fortune >= price) {
+        fortune -= price;
+        moneyLeftEl.textContent = formatMoney(fortune);
+      } else {
+        alert(currentLang === 'fr' ? "Pas assez d'argent !" : "Not enough money!");
+      }
+    }
+
+    langSelect.addEventListener('change', (e) => {
+      currentLang = e.target.value;
+      updateLang();
+    });
+
+    updateLang();
+  </script>
+</body>
+</html>
